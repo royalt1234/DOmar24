@@ -67,6 +67,9 @@ jobs:
         service: '${{ env.BACKEND_SERVICE }}'
         image: '${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/containers/backend:${{ github.sha }}'
         region: '${{ env.REGION }}'
+        # Permits public access to the service. 
+        # In a real enterprise app, you might omit this for internal backends.
+        flags: '--allow-unauthenticated'
 
     - name: 'Step 8: Deploy Frontend to Cloud Run'
       uses: 'google-github-actions/deploy-cloudrun@v2'
@@ -74,3 +77,4 @@ jobs:
         service: '${{ env.FRONTEND_SERVICE }}'
         image: '${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/containers/frontend:${{ github.sha }}'
         region: '${{ env.REGION }}'
+        flags: '--allow-unauthenticated'
